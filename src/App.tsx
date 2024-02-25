@@ -6,6 +6,7 @@ import Button from "./component/UI/Button"
 import Input from "./component/UI/Input"
 import { IProduct } from "./interfaces"
 import { productValidation } from "./validation"
+import ErrorMessage from "./component/ErrorMessage"
 
 const App = () => {
   const defaultProductObj = {
@@ -21,6 +22,12 @@ const App = () => {
   }
   const [isOpen, setIsOpen] = useState(false)
   const [product, setProduct] = useState<IProduct>(defaultProductObj)
+  const [errors, setErrors] = useState({
+    title: '',
+    description: '',
+    imageURL: '',
+    price: ''
+  })
 
   /* ------ HUNDLERS ------- */
   const closeModal = () => setIsOpen(false);
@@ -31,6 +38,10 @@ const App = () => {
       ...product,
       [name]: value,
     });
+    setErrors({
+      ...errors,
+      [name]: ""
+    })
   }
   const onCancel = () => {
     setProduct(defaultProductObj)
@@ -46,12 +57,20 @@ const App = () => {
       imageURL,
     })
     console.log(errors)
+    const hasErrorMsg = Object.values(errors).some(value => value == "") && Object.values(errors).every(value => value == "")
+
+    if (!hasErrorMsg) {
+      setErrors(errors)
+      return;
+    }
+    console.log("send to server")
   }
   /* ------ RENDERS ------- */
   const renderProductList = productList.map(product => <ProductCard key={product.id} product={product} />)
   const renderFormInputList = formInputsList.map(input => <div className="flex flex-col" key={input.id}>
     <label htmlFor={input.id} className="mb-[2px] text-sm font-medium text-gray-700">{input.label}</label>
     <Input type="text" id={input.id} name={input.name} value={product[input.name]} onChange={onChangeHandler} />
+    <ErrorMessage message={errors[input.name]} />
   </div>)
 
 
