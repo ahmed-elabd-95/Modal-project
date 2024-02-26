@@ -1,12 +1,14 @@
 import { IProduct } from "../interfaces"
 import { txtcutter } from "../utils/functions"
+import CircleColor from "./CircleColor"
 import Image from "./Image"
 import Button from "./UI/Button"
 interface IProps {
   product: IProduct
 }
 const ProductCard = ({ product }: IProps) => {
-  const { title, description, imageURL, price, category } = product
+  const { title, description, imageURL, price, category, colors } = product
+  const renderColors = colors.map(color => <CircleColor key={color} color={color} />)
   return (
     <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto">
 
@@ -17,12 +19,9 @@ const ProductCard = ({ product }: IProps) => {
       />
       <h3 className="text-lg font-semibold">{txtcutter(title, 20)}</h3>
       <p className="text-xs text-gray-500 break-words">{txtcutter(description)}</p>
-      <div className="flex item-center my-4 space-x-2">
-        <span className="w-5 h-5 bg-indigo-600 rounded-full cursor-pointer" />
-        <span className="w-5 h-5 bg-red-600 rounded-full cursor-pointer" />
-        <span className="w-5 h-5 bg-green-600 rounded-full cursor-pointer" />
-        <span className="w-5 h-5 bg-yellow-600 rounded-full cursor-pointer" />
-      </div>
+      <div className="flex item-center my-4 space-x-1">
+          {renderColors}
+          </div>
       <div className="flex items-center justify-between">
         <span className="text-lg text-indigo-600 font-semibold">${price}</span>
         <Image
