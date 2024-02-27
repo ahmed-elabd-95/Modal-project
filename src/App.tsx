@@ -44,10 +44,7 @@ const App = () => {
       [name]: ""
     })
   }
-  const onCancel = () => {
-    setProduct(defaultProductObj)
-    closeModal()
-  }
+  
   const submitHundler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const { title, description, price, imageURL } = product
