@@ -7,7 +7,7 @@ width?: "w-full"| "w-fit"
 }
 const Button = ({children,className, width="w-full", ...rest}: IProps) => {
   return (
-    <button className={`${className} ${width}  p-2 rounded-md text-white`} {...rest}>{children}</button>
+    <button className={`${className} ${width}  rounded-lg text-white px-3 py-3 duration-200 font-medium`} {...rest}>{children}</button>
   )
 }
 
